@@ -16,7 +16,7 @@ class _GridViewHomeScreenState extends State<GridViewHomeScreen> {
   List types2 = [];
 
   String pokemonLink = "https://pokeapi.co/api/v2/pokemon/";
-  String startCallLink = "https://pokeapi.co/api/v2/pokemon?limit=20";
+  String startCallLink = "https://pokeapi.co/api/v2/pokemon?limit=20&offset=0";
 
   Future<String> callLink(String link) async {
     http.Response response;
@@ -75,41 +75,87 @@ class _GridViewHomeScreenState extends State<GridViewHomeScreen> {
       ),
       itemBuilder: (context, index) {
         return Container(
-          color: Colors.black12,
+          decoration: BoxDecoration(
+            color: Colors.black45,
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(color: const Color.fromARGB(29, 255, 255, 255)),
+          ),
           child: Row(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    mapresponse.isEmpty
-                        ? Text("")
-                        : Text(
-                          mapresponse['results'][index]['name'],
-                          style: TextStyle(fontSize: 24),
+              // Left side: Name and Types (60% width)
+              Expanded(
+                flex: 60,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      // Name section (60% height)
+                      Expanded(
+                        flex: 60,
+                        child: Container(
+                          width: double.infinity,
+                          alignment: Alignment.centerLeft,
+                          child:
+                              mapresponse.isEmpty
+                                  ? Text("")
+                                  : Text(
+                                    mapresponse['results'][index]['name'][0]
+                                            .toUpperCase() +
+                                        mapresponse['results'][index]['name']
+                                            .substring(1),
+                                    style: TextStyle(fontSize: 24),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                  ),
                         ),
-                    Row(
-                      children: [
-                        types1.length >= index + 1
-                            ? Text(
-                              types1[index],
-                              style: TextStyle(fontSize: 18),
-                            )
-                            : Text(""),
-                        SizedBox(width: 10),
-                        types1.length >= index + 1
-                            ? Text("flying", style: TextStyle(fontSize: 18))
-                            : Text(""),
-                      ],
-                    ),
-                  ],
+                      ),
+                      // Types section (40% height)
+                      Expanded(
+                        flex: 40,
+                        child: Container(
+                          width: double.infinity,
+                          alignment: Alignment.centerLeft,
+                          child: Row(
+                            children: [
+                              types1.length >= index + 1
+                                  ? Text(
+                                    types1[index][0].toUpperCase() +
+                                        types1[index].substring(1),
+                                    style: TextStyle(fontSize: 18),
+                                  )
+                                  : Text(""),
+                              SizedBox(width: 10),
+                              types1.length >= index + 1
+                                  ? Text(
+                                    types2[index].length > 2
+                                        ? types2[index][0].toUpperCase() +
+                                            types2[index].substring(1)
+                                        : "",
+                                    style: TextStyle(fontSize: 18),
+                                  )
+                                  : Text(""),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              Expanded(child: SizedBox()),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(color: Colors.grey, height: 150, width: 120),
+              // Right side: Image (40% width)
+              Expanded(
+                flex: 40,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.grey,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    height: 150,
+                    width: 120,
+                  ),
+                ),
               ),
             ],
           ),
