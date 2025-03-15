@@ -13,7 +13,7 @@ class GridViewHomeScreen extends StatefulWidget {
 class _GridViewHomeScreenState extends State<GridViewHomeScreen> {
   Map mapresponse = {};
 
-  int limit = 25;
+  int limit = 75;
 
   List<String> types1 = [];
   List<String> types2 = [];
@@ -104,7 +104,9 @@ class _GridViewHomeScreenState extends State<GridViewHomeScreen> {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                colors[index]!.color,
+                colors.length >= index + 1
+                    ? colors[index]!.color
+                    : const Color.fromARGB(255, 200, 200, 200),
                 const Color.fromARGB(255, 58, 58, 58),
               ],
               begin: Alignment.bottomRight,
