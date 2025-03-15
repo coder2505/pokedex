@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:http/http.dart' as http;
+import 'package:pokedex_/pokemon.dart';
 
 class GridViewHomeScreen extends StatefulWidget {
   const GridViewHomeScreen({super.key});
@@ -13,12 +14,10 @@ class GridViewHomeScreen extends StatefulWidget {
 class _GridViewHomeScreenState extends State<GridViewHomeScreen> {
   Map mapresponse = {};
 
-  int limit = 75;
+  int limit = 10000;
 
-  List<String> types1 = [];
-  List<String> types2 = [];
-  List<String> images = [];
-  List<PaletteColor?> colors = [];
+  List<Pokemon> pokemonList = [];
+
   String pokemonLink = "https://pokeapi.co/api/v2/pokemon/";
   String startCallLink = "https://pokeapi.co/api/v2/pokemon?limit=&offset=0";
 
@@ -48,25 +47,43 @@ class _GridViewHomeScreenState extends State<GridViewHomeScreen> {
         );
 
         if (pokemoninfo != "") {
-          setState(() {
-            Map pokemonMap = jsonDecode(pokemoninfo);
-            types1.add(pokemonMap['types'][0]['type']['name']);
-            images.add(pokemonMap['sprites']['front_default']);
-            colorForPokemon(images.length - 1);
+          Map pokemonMap = jsonDecode(pokemoninfo);
 
-            try {
-              types2.add(pokemonMap['types'][1]['type']['name']);
-            } catch (e) {
-              types2.add("");
-            }
+          String name =
+              pokemonMap['name'][0].toUpperCase() +
+              pokemonMap['name'].substring(1);
+          String types1 =
+              pokemonMap['types'][0]['type']['name'][0].toUpperCase() +
+              pokemonMap['types'][0]['type']['name'].substring(1);
+          String imageUrl = pokemonMap['sprites']['front_default'];
+          String types2 = "";
+          try {
+            types2 =
+                pokemonMap['types'][1]['type']['name'][0].toUpperCase() +
+                pokemonMap['types'][1]['type']['name'].substring(1);
+          } catch (e) {
+            types2 = "";
+          }
+
+          colorForPokemon(imageUrl, i);
+
+          setState(() {
+            pokemonList.add(
+              Pokemon(
+                name: name,
+                types1: types1,
+                types2: types2,
+                imageUrl: imageUrl,
+              ),
+            );
           });
         }
       }
     }
   }
 
-  Future colorForPokemon(indx) async {
-    ImageProvider imageProvider = Image.network(images[indx]).image;
+  Future colorForPokemon(imageurl, int index) async {
+    ImageProvider imageProvider = Image.network(imageurl).image;
 
     final PaletteGenerator paletteGenerator =
         await PaletteGenerator.fromImageProvider(
@@ -74,13 +91,11 @@ class _GridViewHomeScreenState extends State<GridViewHomeScreen> {
           size: Size(200, 200), // Resize image for faster processing
         );
 
-    setState(() {
-      try {
-        colors.add(paletteGenerator.dominantColor);
-      } catch (e) {
-        colors.add(PaletteColor(Colors.blueGrey, 10));
-      }
-    });
+    try {
+      pokemonList[index].color = (paletteGenerator.dominantColor);
+    } catch (e) {
+      pokemonList[index].color = (PaletteColor(Colors.blueGrey, 10));
+    }
   }
 
   @override
@@ -104,9 +119,10 @@ class _GridViewHomeScreenState extends State<GridViewHomeScreen> {
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                colors.length >= index + 1
-                    ? colors[index]!.color
-                    : const Color.fromARGB(255, 200, 200, 200),
+                pokemonList.length >= index + 1 &&
+                        pokemonList[index].color != null
+                    ? pokemonList[index].color!.color
+                    : Colors.black45,
                 const Color.fromARGB(255, 58, 58, 58),
               ],
               begin: Alignment.bottomRight,
@@ -133,17 +149,14 @@ class _GridViewHomeScreenState extends State<GridViewHomeScreen> {
                           width: double.infinity,
                           alignment: Alignment.centerLeft,
                           child:
-                              mapresponse.isEmpty
-                                  ? Text("")
-                                  : Text(
-                                    mapresponse['results'][index]['name'][0]
-                                            .toUpperCase() +
-                                        mapresponse['results'][index]['name']
-                                            .substring(1),
+                              pokemonList.length >= index + 1
+                                  ? Text(
+                                    pokemonList[index].name,
                                     style: TextStyle(fontSize: 24),
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 1,
-                                  ),
+                                  )
+                                  : Text(""),
                         ),
                       ),
                       // Types section (40% height)
@@ -154,20 +167,16 @@ class _GridViewHomeScreenState extends State<GridViewHomeScreen> {
                           alignment: Alignment.centerLeft,
                           child: Row(
                             children: [
-                              types1.length >= index + 1
+                              pokemonList.length >= index + 1
                                   ? Text(
-                                    types1[index][0].toUpperCase() +
-                                        types1[index].substring(1),
+                                    pokemonList[index].types1,
                                     style: TextStyle(fontSize: 18),
                                   )
                                   : Text(""),
                               SizedBox(width: 10),
-                              types1.length >= index + 1
+                              pokemonList.length >= index + 1
                                   ? Text(
-                                    types2[index].length > 2
-                                        ? types2[index][0].toUpperCase() +
-                                            types2[index].substring(1)
-                                        : "",
+                                    pokemonList[index].types2,
                                     style: TextStyle(fontSize: 18),
                                   )
                                   : Text(""),
@@ -192,8 +201,11 @@ class _GridViewHomeScreenState extends State<GridViewHomeScreen> {
                     height: 150,
                     width: 120,
                     child:
-                        images.length >= index + 1
-                            ? Image.network(images[index], fit: BoxFit.contain)
+                        pokemonList.length >= index + 1
+                            ? Image.network(
+                              pokemonList[index].imageUrl,
+                              fit: BoxFit.contain,
+                            )
                             : SizedBox(),
                   ),
                 ),
