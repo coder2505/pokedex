@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:palette_generator/palette_generator.dart';
 import 'package:http/http.dart' as http;
 
 class GridViewHomeScreen extends StatefulWidget {
@@ -12,11 +13,14 @@ class GridViewHomeScreen extends StatefulWidget {
 class _GridViewHomeScreenState extends State<GridViewHomeScreen> {
   Map mapresponse = {};
 
-  List types1 = [];
-  List types2 = [];
+  int limit = 25;
 
+  List<String> types1 = [];
+  List<String> types2 = [];
+  List<String> images = [];
+  List<PaletteColor?> colors = [];
   String pokemonLink = "https://pokeapi.co/api/v2/pokemon/";
-  String startCallLink = "https://pokeapi.co/api/v2/pokemon?limit=20&offset=0";
+  String startCallLink = "https://pokeapi.co/api/v2/pokemon?limit=&offset=0";
 
   Future<String> callLink(String link) async {
     http.Response response;
@@ -38,7 +42,7 @@ class _GridViewHomeScreenState extends State<GridViewHomeScreen> {
         mapresponse = jsonDecode(response);
       });
 
-      for (int i = 0; i < 20; i++) {
+      for (int i = 0; i < limit; i++) {
         String pokemoninfo = await callLink(
           pokemonLink + mapresponse['results'][i]['name'],
         );
@@ -47,6 +51,9 @@ class _GridViewHomeScreenState extends State<GridViewHomeScreen> {
           setState(() {
             Map pokemonMap = jsonDecode(pokemoninfo);
             types1.add(pokemonMap['types'][0]['type']['name']);
+            images.add(pokemonMap['sprites']['front_default']);
+            colorForPokemon(images.length - 1);
+
             try {
               types2.add(pokemonMap['types'][1]['type']['name']);
             } catch (e) {
@@ -58,8 +65,27 @@ class _GridViewHomeScreenState extends State<GridViewHomeScreen> {
     }
   }
 
+  Future colorForPokemon(indx) async {
+    ImageProvider imageProvider = Image.network(images[indx]).image;
+
+    final PaletteGenerator paletteGenerator =
+        await PaletteGenerator.fromImageProvider(
+          imageProvider,
+          size: Size(200, 200), // Resize image for faster processing
+        );
+
+    setState(() {
+      try {
+        colors.add(paletteGenerator.dominantColor);
+      } catch (e) {
+        colors.add(PaletteColor(Colors.blueGrey, 10));
+      }
+    });
+  }
+
   @override
   void initState() {
+    startCallLink = "https://pokeapi.co/api/v2/pokemon?limit=$limit&offset=0";
     calle();
     super.initState();
   }
@@ -67,7 +93,7 @@ class _GridViewHomeScreenState extends State<GridViewHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return GridView.builder(
-      itemCount: 20,
+      itemCount: limit,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 1,
         childAspectRatio: 2.75,
@@ -76,10 +102,19 @@ class _GridViewHomeScreenState extends State<GridViewHomeScreen> {
       itemBuilder: (context, index) {
         return Container(
           decoration: BoxDecoration(
-            color: Colors.black45,
-            borderRadius: BorderRadius.circular(5),
+            gradient: LinearGradient(
+              colors: [
+                colors[index]!.color,
+                const Color.fromARGB(255, 58, 58, 58),
+              ],
+              begin: Alignment.bottomRight,
+              end: Alignment.topLeft,
+              tileMode: TileMode.decal,
+            ),
+            borderRadius: BorderRadius.circular(15),
             border: Border.all(color: const Color.fromARGB(29, 255, 255, 255)),
           ),
+
           child: Row(
             children: [
               // Left side: Name and Types (60% width)
@@ -149,11 +184,15 @@ class _GridViewHomeScreenState extends State<GridViewHomeScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                     decoration: BoxDecoration(
-                      color: Colors.grey,
+                      color: Colors.transparent,
                       borderRadius: BorderRadius.circular(5),
                     ),
                     height: 150,
                     width: 120,
+                    child:
+                        images.length >= index + 1
+                            ? Image.network(images[index], fit: BoxFit.contain)
+                            : SizedBox(),
                   ),
                 ),
               ),
