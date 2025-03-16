@@ -1,3 +1,4 @@
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:palette_generator/palette_generator.dart';
 
 class Pokemon {
@@ -15,3 +16,27 @@ class Pokemon {
     this.color,
   });
 }
+
+class ProviderList extends Notifier<List<Pokemon>> {
+  @override
+  List<Pokemon> build() {
+    return [];
+  }
+
+  void add(Pokemon obj) {
+    state = [...state, obj];
+  }
+
+  void addColor(PaletteColor? c, indx) {
+    state[indx].color = c;
+  }
+
+  int length() {
+    return state.length;
+  }
+
+}
+
+final pokemonListProvider = NotifierProvider<ProviderList, List<Pokemon>>(() {
+  return ProviderList();
+});

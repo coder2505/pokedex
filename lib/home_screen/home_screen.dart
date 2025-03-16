@@ -16,12 +16,13 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: GridViewHomeScreen(),
+        // child: GridViewHomeScreen(),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   backgroundColor: const Color.fromARGB(207, 0, 0, 0),
-      //   child: Icon(Icons.filter_alt_rounded),
-      //   onPressed: () {},
-      // ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: const Color.fromARGB(207, 0, 0, 0),
+        child: Icon(Icons.filter_alt_rounded),
+        onPressed: () {},
+      ),
     );
   }
 }

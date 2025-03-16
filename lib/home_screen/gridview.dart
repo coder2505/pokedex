@@ -1,22 +1,21 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:http/http.dart' as http;
 import 'package:pokedex_/pokemon.dart';
 
-class GridViewHomeScreen extends StatefulWidget {
+class GridViewHomeScreen extends ConsumerStatefulWidget {
   const GridViewHomeScreen({super.key});
 
   @override
-  State<GridViewHomeScreen> createState() => _GridViewHomeScreenState();
+  ConsumerState<GridViewHomeScreen> createState() => _GridViewHomeScreenState();
 }
 
-class _GridViewHomeScreenState extends State<GridViewHomeScreen> {
+class _GridViewHomeScreenState extends ConsumerState<GridViewHomeScreen> {
   Map mapresponse = {};
 
-  int limit = 10000;
-
-  List<Pokemon> pokemonList = [];
+  int limit = 100;
 
   String pokemonLink = "https://pokeapi.co/api/v2/pokemon/";
   String startCallLink = "https://pokeapi.co/api/v2/pokemon?limit=&offset=0";
@@ -68,14 +67,16 @@ class _GridViewHomeScreenState extends State<GridViewHomeScreen> {
           colorForPokemon(imageUrl, i);
 
           setState(() {
-            pokemonList.add(
-              Pokemon(
-                name: name,
-                types1: types1,
-                types2: types2,
-                imageUrl: imageUrl,
-              ),
-            );
+            ref
+                .read(pokemonListProvider.notifier)
+                .add(
+                  Pokemon(
+                    name: name,
+                    types1: types1,
+                    types2: types2,
+                    imageUrl: imageUrl,
+                  ),
+                );
           });
         }
       }
@@ -88,13 +89,17 @@ class _GridViewHomeScreenState extends State<GridViewHomeScreen> {
     final PaletteGenerator paletteGenerator =
         await PaletteGenerator.fromImageProvider(
           imageProvider,
-          size: Size(200, 200), // Resize image for faster processing
+          size: Size(20, 20), // Resize image for faster processing
         );
 
     try {
-      pokemonList[index].color = (paletteGenerator.dominantColor);
+      ref
+          .read(pokemonListProvider.notifier)
+          .addColor(paletteGenerator.dominantColor, index);
     } catch (e) {
-      pokemonList[index].color = (PaletteColor(Colors.blueGrey, 10));
+      ref
+          .read(pokemonListProvider.notifier)
+          .addColor(PaletteColor(Colors.blueGrey, 10), index);
     }
   }
 
@@ -115,13 +120,16 @@ class _GridViewHomeScreenState extends State<GridViewHomeScreen> {
         mainAxisSpacing: 10,
       ),
       itemBuilder: (context, index) {
+        int length = ref.read(pokemonListProvider.notifier).length();
+
+        List<Pokemon> pokemonObj = ref.watch(pokemonListProvider);
+
         return Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                pokemonList.length >= index + 1 &&
-                        pokemonList[index].color != null
-                    ? pokemonList[index].color!.color
+                length >= index + 1 && pokemonObj[index].color != null
+                    ? pokemonObj[index].color!.color
                     : Colors.black45,
                 const Color.fromARGB(255, 58, 58, 58),
               ],
@@ -149,9 +157,9 @@ class _GridViewHomeScreenState extends State<GridViewHomeScreen> {
                           width: double.infinity,
                           alignment: Alignment.centerLeft,
                           child:
-                              pokemonList.length >= index + 1
+                              length >= index + 1
                                   ? Text(
-                                    pokemonList[index].name,
+                                    pokemonObj[index].name,
                                     style: TextStyle(fontSize: 24),
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 1,
@@ -167,16 +175,16 @@ class _GridViewHomeScreenState extends State<GridViewHomeScreen> {
                           alignment: Alignment.centerLeft,
                           child: Row(
                             children: [
-                              pokemonList.length >= index + 1
+                              length >= index + 1
                                   ? Text(
-                                    pokemonList[index].types1,
+                                    pokemonObj[index].types1,
                                     style: TextStyle(fontSize: 18),
                                   )
                                   : Text(""),
                               SizedBox(width: 10),
-                              pokemonList.length >= index + 1
+                              length >= index + 1
                                   ? Text(
-                                    pokemonList[index].types2,
+                                    pokemonObj[index].types2,
                                     style: TextStyle(fontSize: 18),
                                   )
                                   : Text(""),
@@ -201,9 +209,9 @@ class _GridViewHomeScreenState extends State<GridViewHomeScreen> {
                     height: 150,
                     width: 120,
                     child:
-                        pokemonList.length >= index + 1
+                        length >= index + 1
                             ? Image.network(
-                              pokemonList[index].imageUrl,
+                              pokemonObj[index].imageUrl,
                               fit: BoxFit.contain,
                             )
                             : SizedBox(),
