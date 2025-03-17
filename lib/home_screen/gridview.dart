@@ -15,7 +15,7 @@ class GridViewHomeScreen extends ConsumerStatefulWidget {
 class _GridViewHomeScreenState extends ConsumerState<GridViewHomeScreen> {
   Map mapresponse = {};
 
-  int limit = 100;
+  int limit = 50;
 
   String pokemonLink = "https://pokeapi.co/api/v2/pokemon/";
   String startCallLink = "https://pokeapi.co/api/v2/pokemon?limit=&offset=0";
@@ -64,6 +64,13 @@ class _GridViewHomeScreenState extends ConsumerState<GridViewHomeScreen> {
             types2 = "";
           }
 
+          int hp = pokemonMap['stats'][0]['base_stat'];
+          int attack = pokemonMap['stats'][1]['base_stat'];
+          int defense = pokemonMap['stats'][2]['base_stat'];
+          int specialAttack = pokemonMap['stats'][3]['base_stat'];
+          int specialDefense = pokemonMap['stats'][4]['base_stat'];
+          int speed = pokemonMap['stats'][5]['base_stat'];
+
           colorForPokemon(imageUrl, i);
 
           setState(() {
@@ -75,6 +82,12 @@ class _GridViewHomeScreenState extends ConsumerState<GridViewHomeScreen> {
                     types1: types1,
                     types2: types2,
                     imageUrl: imageUrl,
+                    hp: hp,
+                    attack: attack,
+                    defense: defense,
+                    spAttack: specialAttack,
+                    spDefense: specialDefense,
+                    speed: speed,
                   ),
                 );
           });
@@ -112,6 +125,8 @@ class _GridViewHomeScreenState extends ConsumerState<GridViewHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    ref.watch(pokemonListProvider);
+
     return GridView.builder(
       itemCount: limit,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
