@@ -34,183 +34,210 @@ void bottomModalSheet(BuildContext context, WidgetRef ref) {
                   children: [
                     SizedBox(height: 16),
 
-                    ListTile(
-                      title: const Text(
-                        "Alphabetical",
-                        style: TextStyle(fontSize: 22),
-                        textAlign: TextAlign.center,
-                      ),
-                      leading: Radio(
-                        activeColor: Colors.blueAccent,
-                        value: radio[0],
-                        groupValue: varGlobal.currentOption,
-                        onChanged: (val) {
-                          buttonSelected == 0
-                              ? ref
-                                  .read(pokemonListProvider.notifier)
-                                  .sortAlphabeticalAscending()
-                              : ref
-                                  .read(pokemonListProvider.notifier)
-                                  .sortAlphabeticalDescending();
-                          setState(() {
-                            varGlobal.currentOption = val.toString();
-                          });
-                        },
-                      ),
-                    ),
-                    ListTile(
-                      title: const Text(
-                        "HP",
-                        style: TextStyle(fontSize: 22),
-                        textAlign: TextAlign.center,
-                      ),
-                      leading: Radio(
-                        activeColor: Colors.blueAccent,
-
-                        value: radio[1],
-                        groupValue: varGlobal.currentOption,
-                        onChanged: (val) {
-                          buttonSelected == 0
-                              ? ref
-                                  .read(pokemonListProvider.notifier)
-                                  .sortHPAscending()
-                              : ref
-                                  .read(pokemonListProvider.notifier)
-                                  .sortHPDescending();
-
-                          setState(() {
-                            varGlobal.currentOption = val.toString();
-                          });
-                        },
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.06,
+                      child: ListTile(
+                        title: const Text(
+                          "Alphabetical",
+                          style: TextStyle(fontSize: 22),
+                          textAlign: TextAlign.center,
+                        ),
+                        leading: Radio(
+                          activeColor: Colors.blueAccent,
+                          value: radio[0],
+                          groupValue: varGlobal.currentOption,
+                          onChanged: (val) {
+                            buttonSelected == 0
+                                ? ref
+                                    .read(pokemonListProvider.notifier)
+                                    .sortAlphabeticalAscending()
+                                : ref
+                                    .read(pokemonListProvider.notifier)
+                                    .sortAlphabeticalDescending();
+                            setState(() {
+                              varGlobal.currentOption = val.toString();
+                            });
+                          },
+                        ),
                       ),
                     ),
-                    ListTile(
-                      title: const Text(
-                        "Attack",
-                        style: TextStyle(fontSize: 22),
-                        textAlign: TextAlign.center,
-                      ),
-                      leading: Radio(
-                        activeColor: Colors.blueAccent,
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.06,
 
-                        value: radio[2],
-                        groupValue: varGlobal.currentOption,
-                        onChanged: (val) {
-                          buttonSelected == 0
-                              ? ref
-                                  .read(pokemonListProvider.notifier)
-                                  .sortAttackAscending()
-                              : ref
-                                  .read(pokemonListProvider.notifier)
-                                  .sortAttackDescending();
-                          setState(() {
-                            varGlobal.currentOption = val.toString();
-                          });
-                        },
-                      ),
-                    ),
-                    ListTile(
-                      title: const Text(
-                        "Defense",
-                        style: TextStyle(fontSize: 22),
-                        textAlign: TextAlign.center,
-                      ),
-                      leading: Radio(
-                        activeColor: Colors.blueAccent,
+                      child: ListTile(
+                        title: const Text(
+                          "HP",
+                          style: TextStyle(fontSize: 22),
+                          textAlign: TextAlign.center,
+                        ),
+                        leading: Radio(
+                          activeColor: Colors.blueAccent,
 
-                        value: radio[3],
-                        groupValue: varGlobal.currentOption,
+                          value: radio[1],
+                          groupValue: varGlobal.currentOption,
+                          onChanged: (val) {
+                            buttonSelected == 0
+                                ? ref
+                                    .read(pokemonListProvider.notifier)
+                                    .sortHPAscending()
+                                : ref
+                                    .read(pokemonListProvider.notifier)
+                                    .sortHPDescending();
 
-                        onChanged: (val) {
-                          buttonSelected == 0
-                              ? ref
-                                  .read(pokemonListProvider.notifier)
-                                  .sortDefenseAscending()
-                              : ref
-                                  .read(pokemonListProvider.notifier)
-                                  .sortDefenseDescending();
-
-                          setState(
-                            () => varGlobal.currentOption = val.toString(),
-                          );
-                        },
+                            setState(() {
+                              varGlobal.currentOption = val.toString();
+                            });
+                          },
+                        ),
                       ),
                     ),
-                    ListTile(
-                      title: const Text(
-                        "Speed",
-                        style: TextStyle(fontSize: 22),
-                        textAlign: TextAlign.center,
-                      ),
-                      leading: Radio(
-                        activeColor: Colors.blueAccent,
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.06,
 
-                        value: radio[4],
-                        groupValue: varGlobal.currentOption,
-                        onChanged: (val) {
-                          buttonSelected == 0
-                              ? ref
-                                  .read(pokemonListProvider.notifier)
-                                  .sortSpeedAscending()
-                              : ref
-                                  .read(pokemonListProvider.notifier)
-                                  .sortSpeedDescending();
-                          setState(
-                            () => varGlobal.currentOption = val.toString(),
-                          );
-                        },
-                      ),
-                    ),
-                    ListTile(
-                      title: const Text(
-                        "Special-Attack",
-                        style: TextStyle(fontSize: 22),
-                        textAlign: TextAlign.center,
-                      ),
-                      leading: Radio(
-                        activeColor: Colors.blueAccent,
+                      child: ListTile(
+                        title: const Text(
+                          "Attack",
+                          style: TextStyle(fontSize: 22),
+                          textAlign: TextAlign.center,
+                        ),
+                        leading: Radio(
+                          activeColor: Colors.blueAccent,
 
-                        value: radio[5],
-                        groupValue: varGlobal.currentOption,
-
-                        onChanged: (val) {
-                          buttonSelected == 0
-                              ? ref
-                                  .read(pokemonListProvider.notifier)
-                                  .sortSpecialAttackAscending()
-                              : ref
-                                  .read(pokemonListProvider.notifier)
-                                  .sortSpecialAttackDescending();
-
-                          setState(
-                            () => varGlobal.currentOption = val.toString(),
-                          );
-                        },
+                          value: radio[2],
+                          groupValue: varGlobal.currentOption,
+                          onChanged: (val) {
+                            buttonSelected == 0
+                                ? ref
+                                    .read(pokemonListProvider.notifier)
+                                    .sortAttackAscending()
+                                : ref
+                                    .read(pokemonListProvider.notifier)
+                                    .sortAttackDescending();
+                            setState(() {
+                              varGlobal.currentOption = val.toString();
+                            });
+                          },
+                        ),
                       ),
                     ),
-                    ListTile(
-                      title: const Text(
-                        "Special-Defense",
-                        style: TextStyle(fontSize: 22),
-                        textAlign: TextAlign.center,
-                      ),
-                      leading: Radio(
-                        activeColor: Colors.blueAccent,
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.06,
 
-                        value: radio[6],
-                        groupValue: varGlobal.currentOption,
-                        onChanged: (val) {
-                          buttonSelected == 0
-                              ? ref
-                                  .read(pokemonListProvider.notifier)
-                                  .sortSpecialDefenseAscending()
-                              : ref
-                                  .read(pokemonListProvider.notifier)
-                                  .sortSpecialDefenseDescending();
-                          setState(
-                            () => varGlobal.currentOption = val.toString(),
-                          );
-                        },
+                      child: ListTile(
+                        title: const Text(
+                          "Defense",
+                          style: TextStyle(fontSize: 22),
+                          textAlign: TextAlign.center,
+                        ),
+                        leading: Radio(
+                          activeColor: Colors.blueAccent,
+
+                          value: radio[3],
+                          groupValue: varGlobal.currentOption,
+
+                          onChanged: (val) {
+                            buttonSelected == 0
+                                ? ref
+                                    .read(pokemonListProvider.notifier)
+                                    .sortDefenseAscending()
+                                : ref
+                                    .read(pokemonListProvider.notifier)
+                                    .sortDefenseDescending();
+
+                            setState(
+                              () => varGlobal.currentOption = val.toString(),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.06,
+
+                      child: ListTile(
+                        title: const Text(
+                          "Speed",
+                          style: TextStyle(fontSize: 22),
+                          textAlign: TextAlign.center,
+                        ),
+                        leading: Radio(
+                          activeColor: Colors.blueAccent,
+
+                          value: radio[4],
+                          groupValue: varGlobal.currentOption,
+                          onChanged: (val) {
+                            buttonSelected == 0
+                                ? ref
+                                    .read(pokemonListProvider.notifier)
+                                    .sortSpeedAscending()
+                                : ref
+                                    .read(pokemonListProvider.notifier)
+                                    .sortSpeedDescending();
+                            setState(
+                              () => varGlobal.currentOption = val.toString(),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.06,
+
+                      child: ListTile(
+                        title: const Text(
+                          "Special-Attack",
+                          style: TextStyle(fontSize: 22),
+                          textAlign: TextAlign.center,
+                        ),
+                        leading: Radio(
+                          activeColor: Colors.blueAccent,
+
+                          value: radio[5],
+                          groupValue: varGlobal.currentOption,
+
+                          onChanged: (val) {
+                            buttonSelected == 0
+                                ? ref
+                                    .read(pokemonListProvider.notifier)
+                                    .sortSpecialAttackAscending()
+                                : ref
+                                    .read(pokemonListProvider.notifier)
+                                    .sortSpecialAttackDescending();
+
+                            setState(
+                              () => varGlobal.currentOption = val.toString(),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.06,
+
+                      child: ListTile(
+                        title: const Text(
+                          "Special-Defense",
+                          style: TextStyle(fontSize: 22),
+                          textAlign: TextAlign.center,
+                        ),
+                        leading: Radio(
+                          activeColor: Colors.blueAccent,
+
+                          value: radio[6],
+                          groupValue: varGlobal.currentOption,
+                          onChanged: (val) {
+                            buttonSelected == 0
+                                ? ref
+                                    .read(pokemonListProvider.notifier)
+                                    .sortSpecialDefenseAscending()
+                                : ref
+                                    .read(pokemonListProvider.notifier)
+                                    .sortSpecialDefenseDescending();
+                            setState(
+                              () => varGlobal.currentOption = val.toString(),
+                            );
+                          },
+                        ),
                       ),
                     ),
                     SizedBox(height: 16),

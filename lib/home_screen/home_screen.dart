@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pokedex_/home_screen/bottommodalsheetsort.dart';
+import 'package:pokedex_/home_screen/dropdowngen.dart';
 import 'package:pokedex_/home_screen/gridview.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -17,8 +18,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       appBar: AppBar(title: Text("Pokedex")),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
-        child: GridViewHomeScreen(),
-        // child: GridViewHomeScreen(),
+
+        child: Column(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.05,
+              child: Center(child: dropDownGen()),
+            ),
+            Expanded(child: GridViewHomeScreen()),
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color.fromARGB(207, 0, 0, 0),
