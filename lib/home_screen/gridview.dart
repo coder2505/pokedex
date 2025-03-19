@@ -15,8 +15,6 @@ class GridViewHomeScreen extends ConsumerStatefulWidget {
 class _GridViewHomeScreenState extends ConsumerState<GridViewHomeScreen> {
   Map mapresponse = {};
 
-  int limit = 50;
-
   String pokemonLink = "https://pokeapi.co/api/v2/pokemon/";
   String startCallLink = "https://pokeapi.co/api/v2/pokemon?limit=&offset=0";
 
@@ -40,7 +38,7 @@ class _GridViewHomeScreenState extends ConsumerState<GridViewHomeScreen> {
         mapresponse = jsonDecode(response);
       });
 
-      for (int i = 0; i < limit; i++) {
+      for (int i = 0; i < 1025; i++) {
         String pokemoninfo = await callLink(
           pokemonLink + mapresponse['results'][i]['name'],
         );
@@ -118,7 +116,8 @@ class _GridViewHomeScreenState extends ConsumerState<GridViewHomeScreen> {
 
   @override
   void initState() {
-    startCallLink = "https://pokeapi.co/api/v2/pokemon?limit=$limit&offset=0";
+    startCallLink = "https://pokeapi.co/api/v2/pokemon?limit=1025&offset=0";
+
     calle();
     super.initState();
   }
@@ -126,9 +125,14 @@ class _GridViewHomeScreenState extends ConsumerState<GridViewHomeScreen> {
   @override
   Widget build(BuildContext context) {
     ref.watch(pokemonListProvider);
+    // ref.watch(filteredPokemonProvider);
+    // ref.watch(limitProvider);
+
+    // int offset = ref.watch(limitProvider.notifier).getOffset();
+    // int limit = ref.watch(limitProvider.notifier).getLimit();
 
     return GridView.builder(
-      itemCount: limit,
+      itemCount: ref.watch(pokemonListProvider.notifier).length(),
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 1,
         childAspectRatio: 2.75,

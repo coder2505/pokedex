@@ -29,24 +29,71 @@ class Pokemon {
   });
 }
 
+List<Pokemon> originalData = []; // ORIGINAL DATA
+
 class ProviderList extends Notifier<List<Pokemon>> {
+  List search = [];
+
   @override
   List<Pokemon> build() {
     return [];
   }
 
+  // SEARCH METHODS
+
+  void searchPokemon(String searchQuery) {
+    List<Pokemon> filteredList = [];
+
+    // print(originalData);
+
+    if (searchQuery.isNotEmpty) {
+      filteredList =
+          originalData
+              .where(
+                (pokemon) => pokemon.name.toLowerCase().startsWith(
+                  searchQuery.toLowerCase(),
+                ),
+              )
+              .toList();
+    }
+
+    if (searchQuery.isNotEmpty) {
+      state = filteredList;
+    } else {
+      state = originalData;
+    }
+  }
+
+  void searchQueryClosed() {
+    state = originalData;
+  }
+
+  List valueOf() {
+    return state;
+  }
+
+  //  ADD
   void add(Pokemon obj) {
     state = [...state, obj];
+    originalData = state;
   }
 
   void addColor(PaletteColor? c, indx) {
     state[indx].color = c;
+    originalData[indx].color = c;
   }
 
   int length() {
     return state.length;
   }
 
+  // FILTER
+
+  void setnewLimit(int limit, int offset) {
+    state = originalData.sublist(limit, offset + 1);
+  }
+
+  //SORT
   void sortAlphabeticalAscending() {
     final newList = [...state];
 

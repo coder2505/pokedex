@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pokedex_/home_screen/bottommodalsheetsort.dart';
 import 'package:pokedex_/home_screen/dropdowngen.dart';
 import 'package:pokedex_/home_screen/gridview.dart';
+import 'package:app_bar_with_search_switch/app_bar_with_search_switch.dart';
+import 'package:pokedex_/pokemon.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -12,10 +14,30 @@ class HomeScreen extends ConsumerStatefulWidget {
 }
 
 class _HomeScreenState extends ConsumerState<HomeScreen> {
+  String Search = "";
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Pokedex")),
+      appBar: AppBarWithSearchSwitch(
+        clearOnClose: true,
+        onClosed: () {
+          ref.read(pokemonListProvider.notifier).searchQueryClosed();
+        },
+
+        onChanged: (text) {
+          Search = text;
+          ref.watch(pokemonListProvider.notifier).searchPokemon(Search);
+        },
+
+        animation: AppBarAnimationSlideLeft.call,
+        appBarBuilder: (BuildContext context) {
+          return AppBar(
+            title: const Text("Pokedex"),
+            actions: [AppBarSearchButton()],
+          );
+        },
+      ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
 
@@ -23,7 +45,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           children: [
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.05,
-              child: Center(child: dropDownGen()),
+              child: Center(child: dropDownGen(ref)),
             ),
             Expanded(child: GridViewHomeScreen()),
           ],
