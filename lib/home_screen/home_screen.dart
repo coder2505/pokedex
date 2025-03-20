@@ -22,7 +22,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       appBar: AppBarWithSearchSwitch(
         clearOnClose: true,
         onClosed: () {
-          ref.read(pokemonListProvider.notifier).searchQueryClosed();
+          ref.read(pokemonListProvider.notifier).orginalState();
         },
 
         onChanged: (text) {

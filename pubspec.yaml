@@ -39,6 +39,7 @@ dependencies:
   riverpod: ^2.6.1
   flutter_riverpod: ^2.6.1
   app_bar_with_search_switch: ^1.8.6
+  fluttertoast: ^8.2.12
 
 dev_dependencies:
   flutter_test:

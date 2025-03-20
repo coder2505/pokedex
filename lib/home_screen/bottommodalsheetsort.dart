@@ -12,6 +12,7 @@ void bottomModalSheet(BuildContext context, WidgetRef ref) {
     "Speed",
     "SpecialAttack",
     "SpecialDefense",
+    "Default",
   ];
 
   showModalBottomSheet(
@@ -24,7 +25,7 @@ void bottomModalSheet(BuildContext context, WidgetRef ref) {
           return StatefulBuilder(
             builder: (BuildContext context, StateSetter setState) {
               return Container(
-                height: MediaQuery.of(context).size.height * 0.8,
+                height: MediaQuery.of(context).size.height,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -35,11 +36,11 @@ void bottomModalSheet(BuildContext context, WidgetRef ref) {
                     SizedBox(height: 16),
 
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.06,
+                      height: MediaQuery.of(context).size.height * 0.055,
                       child: ListTile(
                         title: const Text(
                           "Alphabetical",
-                          style: TextStyle(fontSize: 22),
+                          style: TextStyle(fontSize: 20),
                           textAlign: TextAlign.center,
                         ),
                         leading: Radio(
@@ -62,12 +63,12 @@ void bottomModalSheet(BuildContext context, WidgetRef ref) {
                       ),
                     ),
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.06,
+                      height: MediaQuery.of(context).size.height * 0.055,
 
                       child: ListTile(
                         title: const Text(
                           "HP",
-                          style: TextStyle(fontSize: 22),
+                          style: TextStyle(fontSize: 20),
                           textAlign: TextAlign.center,
                         ),
                         leading: Radio(
@@ -92,12 +93,12 @@ void bottomModalSheet(BuildContext context, WidgetRef ref) {
                       ),
                     ),
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.06,
+                      height: MediaQuery.of(context).size.height * 0.055,
 
                       child: ListTile(
                         title: const Text(
                           "Attack",
-                          style: TextStyle(fontSize: 22),
+                          style: TextStyle(fontSize: 20),
                           textAlign: TextAlign.center,
                         ),
                         leading: Radio(
@@ -121,12 +122,12 @@ void bottomModalSheet(BuildContext context, WidgetRef ref) {
                       ),
                     ),
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.06,
+                      height: MediaQuery.of(context).size.height * 0.055,
 
                       child: ListTile(
                         title: const Text(
                           "Defense",
-                          style: TextStyle(fontSize: 22),
+                          style: TextStyle(fontSize: 20),
                           textAlign: TextAlign.center,
                         ),
                         leading: Radio(
@@ -152,12 +153,12 @@ void bottomModalSheet(BuildContext context, WidgetRef ref) {
                       ),
                     ),
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.06,
+                      height: MediaQuery.of(context).size.height * 0.055,
 
                       child: ListTile(
                         title: const Text(
                           "Speed",
-                          style: TextStyle(fontSize: 22),
+                          style: TextStyle(fontSize: 20),
                           textAlign: TextAlign.center,
                         ),
                         leading: Radio(
@@ -181,12 +182,12 @@ void bottomModalSheet(BuildContext context, WidgetRef ref) {
                       ),
                     ),
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.06,
+                      height: MediaQuery.of(context).size.height * 0.055,
 
                       child: ListTile(
                         title: const Text(
                           "Special-Attack",
-                          style: TextStyle(fontSize: 22),
+                          style: TextStyle(fontSize: 20),
                           textAlign: TextAlign.center,
                         ),
                         leading: Radio(
@@ -212,12 +213,12 @@ void bottomModalSheet(BuildContext context, WidgetRef ref) {
                       ),
                     ),
                     SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.06,
+                      height: MediaQuery.of(context).size.height * 0.055,
 
                       child: ListTile(
                         title: const Text(
                           "Special-Defense",
-                          style: TextStyle(fontSize: 22),
+                          style: TextStyle(fontSize: 20),
                           textAlign: TextAlign.center,
                         ),
                         leading: Radio(
@@ -240,13 +241,42 @@ void bottomModalSheet(BuildContext context, WidgetRef ref) {
                         ),
                       ),
                     ),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.055,
+
+                      child: ListTile(
+                        title: const Text(
+                          "Default",
+                          style: TextStyle(fontSize: 20),
+                          textAlign: TextAlign.center,
+                        ),
+                        leading: Radio(
+                          activeColor: Colors.blueAccent,
+
+                          value: radio[7],
+                          groupValue: varGlobal.currentOption,
+                          onChanged: (val) {
+                            buttonSelected == 0
+                                ? ref
+                                    .read(pokemonListProvider.notifier)
+                                    .orginalState()
+                                : ref
+                                    .read(pokemonListProvider.notifier)
+                                    .orginalStateReverse();
+                            setState(
+                              () => varGlobal.currentOption = val.toString(),
+                            );
+                          },
+                        ),
+                      ),
+                    ),
                     SizedBox(height: 16),
                     Row(
                       children: [
-                        SizedBox(width: 20),
+                        SizedBox(width: 16),
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.4,
-                          height: MediaQuery.of(context).size.height * 0.08,
+                          height: MediaQuery.of(context).size.height * 0.06,
 
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
@@ -284,7 +314,7 @@ void bottomModalSheet(BuildContext context, WidgetRef ref) {
                         Expanded(child: SizedBox()),
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.4,
-                          height: MediaQuery.of(context).size.height * 0.08,
+                          height: MediaQuery.of(context).size.height * 0.06,
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(
@@ -361,6 +391,10 @@ void setAscending(int index, WidgetRef ref) {
     case 6:
       ref.read(pokemonListProvider.notifier).sortSpecialDefenseAscending();
       break;
+
+    case 7:
+      ref.read(pokemonListProvider.notifier).orginalState();
+      break;
   }
 }
 
@@ -392,6 +426,10 @@ void setDescending(int index, WidgetRef ref) {
 
     case 6:
       ref.read(pokemonListProvider.notifier).sortSpecialAttackDescending();
+      break;
+
+    case 7:
+      ref.read(pokemonListProvider.notifier).orginalStateReverse();
       break;
   }
 }

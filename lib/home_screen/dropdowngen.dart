@@ -9,7 +9,7 @@ List<String> genList = [
   "Johto League",
   "Hoenn League",
   "Sinnoh League",
-  "Unova League ",
+  "Unova League",
   "Kalos League",
   "Alola League",
   "Galar League",
@@ -75,7 +75,7 @@ Widget dropDownGen(WidgetRef ref) {
                     .setnewLimit(offset, limit);
                 break;
 
-              case "Unova League":
+              case "Unova League ":
                 int offset = varGlobal.startIndexOfLeagues[4];
                 int limit = varGlobal.endIndexOfLeagues[4];
                 ref

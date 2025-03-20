@@ -44,8 +44,6 @@ class ProviderList extends Notifier<List<Pokemon>> {
   void searchPokemon(String searchQuery) {
     List<Pokemon> filteredList = [];
 
-    // print(originalData);
-
     if (searchQuery.isNotEmpty) {
       filteredList =
           originalData
@@ -64,8 +62,12 @@ class ProviderList extends Notifier<List<Pokemon>> {
     }
   }
 
-  void searchQueryClosed() {
+  void orginalState() {
     state = originalData;
+  }
+
+  void orginalStateReverse() {
+    state = originalData.reversed.toList();
   }
 
   List valueOf() {
@@ -90,7 +92,7 @@ class ProviderList extends Notifier<List<Pokemon>> {
   // FILTER
 
   void setnewLimit(int limit, int offset) {
-    state = originalData.sublist(limit, offset + 1);
+    state = originalData.sublist(limit, offset);
   }
 
   //SORT
