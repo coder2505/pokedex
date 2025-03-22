@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pokedex_/home_screen/bottommodalsheetsort.dart';
 import 'package:pokedex_/home_screen/dropdowngen.dart';
 import 'package:pokedex_/home_screen/gridview.dart';
@@ -21,6 +22,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     return Scaffold(
       appBar: AppBarWithSearchSwitch(
         clearOnClose: true,
+        
         onClosed: () {
           ref.read(pokemonListProvider.notifier).orginalState();
         },
@@ -34,6 +36,10 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
         appBarBuilder: (BuildContext context) {
           return AppBar(
             title: const Text("Pokedex"),
+            titleTextStyle: GoogleFonts.pressStart2p(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
             actions: [AppBarSearchButton()],
           );
         },

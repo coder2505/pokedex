@@ -2,9 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:pokedex_/utils/colorreturn.dart';
+import 'package:pokedex_/assets/utils/colorreturn.dart';
 import 'package:pokedex_/pokemon.dart';
-import 'package:pokedex_/utils/statItem.dart';
+import 'package:pokedex_/assets/utils/statItem.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class PokemonInfo extends StatefulWidget {
   final Pokemon obj;
@@ -16,7 +17,8 @@ class PokemonInfo extends StatefulWidget {
 }
 
 Future<String> callLink(String name) async {
-  String pokemonLink = "https://pokeapi.co/api/v2/pokemon/" + name;
+  // function used by callLinkLocal inside class, used to just call the link
+  String pokemonLink = "https://pokeapi.co/api/v2/pokemon/$name";
 
   http.Response response;
 
@@ -56,12 +58,18 @@ class _PokemonInfoState extends State<PokemonInfo> {
     return Scaffold(
       backgroundColor: Colors.black45,
       appBar: AppBar(
+        // appBar
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
         title: const Text(""),
         backgroundColor: widget.obj.color!.color,
       ),
       body: Column(
         children: [
           Container(
+            // the upper container containing image and heading, container used to add gradient color
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [widget.obj.color!.color, Colors.black45],
@@ -82,28 +90,31 @@ class _PokemonInfoState extends State<PokemonInfo> {
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
 
                 Center(
-                  child: Text(
-                    widget.obj.name,
-                    style: TextStyle(
-                      fontSize: 48,
-                      fontWeight: FontWeight.w600,
-                      foreground:
-                          Paint()
-                            ..shader = LinearGradient(
-                              begin: Alignment.bottomCenter,
-                              end: Alignment.topCenter,
-                              colors: [widget.obj.color!.color, Colors.black],
-                            ).createShader(Rect.fromLTWH(0, 0, 0, 50)),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(16, 8, 8, 0),
+                    child: Text(
+                      widget.obj.name,
+                      style: GoogleFonts.pressStart2p(
+                        fontWeight: FontWeight.bold,
+                        fontSize: MediaQuery.of(context).size.width * 0.085,
+                        foreground:
+                            Paint()
+                              ..shader = LinearGradient(
+                                begin: Alignment.bottomCenter,
+                                end: Alignment.topCenter,
+                                colors: [widget.obj.color!.color, Colors.black],
+                              ).createShader(Rect.fromLTWH(0, 0, 0, 50)),
+                      ),
                     ),
                   ),
                 ),
-                SizedBox(height: 50),
               ],
             ),
           ),
+
+          SizedBox(height: 10),
 
           Expanded(
             child: Container(
@@ -117,34 +128,36 @@ class _PokemonInfoState extends State<PokemonInfo> {
                 ),
               ),
               child: Column(
+                // all children in this
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Row(
+                      // row has two pokemon type properties, both expanded
                       children: [
                         Expanded(
                           child: Center(
-                            child: Text(
-                              widget.obj.types1,
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: getPokemonTypeColorType1(
-                                  widget.obj.types1,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(100),
                                 ),
+                              ),
+                              child: Image.asset(
+                                getPokemonTypeImageType1(widget.obj.types1),
+                                fit: BoxFit.fill,
+                                height: 30,
                               ),
                             ),
                           ),
                         ),
                         Expanded(
                           child: Center(
-                            child: Text(
-                              widget.obj.types2,
-                              style: TextStyle(
-                                fontSize: 20,
-                                color: getPokemonTypeColorType2(
-                                  widget.obj.types2,
-                                ),
-                              ),
+                            child: Image.asset(
+                              getPokemonTypeImageType2(widget.obj.types2),
+                              fit: BoxFit.cover,
+
+                              height: 30,
                             ),
                           ),
                         ),

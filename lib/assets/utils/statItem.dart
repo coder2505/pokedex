@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 Widget singleItem(
   BuildContext context, {
@@ -34,8 +35,8 @@ Widget singleItem(
           SizedBox(width: MediaQuery.of(context).size.width * 0.03), // Spacing
           Text(
             val.toString(),
-            style: TextStyle(
-              fontSize: MediaQuery.of(context).size.width * 0.065,
+            style: GoogleFonts.pressStart2p(
+              fontSize: MediaQuery.of(context).size.width * 0.05,
               fontWeight: FontWeight.bold,
               color: Colors.white,
             ),

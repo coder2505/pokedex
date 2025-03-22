@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:palette_generator/palette_generator.dart';
 import 'package:http/http.dart' as http;
 import 'package:pokedex_/pokemon.dart';
@@ -185,7 +186,10 @@ class _GridViewHomeScreenState extends ConsumerState<GridViewHomeScreen> {
                                 length >= index + 1
                                     ? Text(
                                       pokemonObj[index].name,
-                                      style: TextStyle(fontSize: 24),
+                                      style: GoogleFonts.dotGothic16(
+                                        fontSize: 28,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 1,
                                     )
@@ -203,14 +207,18 @@ class _GridViewHomeScreenState extends ConsumerState<GridViewHomeScreen> {
                                 length >= index + 1
                                     ? Text(
                                       pokemonObj[index].types1,
-                                      style: TextStyle(fontSize: 18),
+                                      style: GoogleFonts.dotGothic16(
+                                        fontSize: 18,
+                                      ),
                                     )
                                     : Text(""),
                                 SizedBox(width: 10),
                                 length >= index + 1
                                     ? Text(
                                       pokemonObj[index].types2,
-                                      style: TextStyle(fontSize: 18),
+                                      style: GoogleFonts.dotGothic16(
+                                        fontSize: 18,
+                                      ),
                                     )
                                     : Text(""),
                               ],

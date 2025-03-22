@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:pokedex_/pokemon.dart';
 import 'package:pokedex_/variables.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void bottomModalSheet(BuildContext context, WidgetRef ref) {
   List<String> radio = [
@@ -38,9 +39,12 @@ void bottomModalSheet(BuildContext context, WidgetRef ref) {
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.055,
                       child: ListTile(
-                        title: const Text(
+                        title: Text(
                           "Alphabetical",
-                          style: TextStyle(fontSize: 20),
+                          style: GoogleFonts.dotGothic16(
+                            fontSize: MediaQuery.of(context).size.width * 0.05,
+                            fontWeight: FontWeight.bold,
+                          ),
                           textAlign: TextAlign.center,
                         ),
                         leading: Radio(
@@ -66,9 +70,12 @@ void bottomModalSheet(BuildContext context, WidgetRef ref) {
                       height: MediaQuery.of(context).size.height * 0.055,
 
                       child: ListTile(
-                        title: const Text(
+                        title: Text(
                           "HP",
-                          style: TextStyle(fontSize: 20),
+                          style: GoogleFonts.dotGothic16(
+                            fontSize: MediaQuery.of(context).size.width * 0.05,
+                            fontWeight: FontWeight.bold,
+                          ),
                           textAlign: TextAlign.center,
                         ),
                         leading: Radio(
@@ -96,9 +103,12 @@ void bottomModalSheet(BuildContext context, WidgetRef ref) {
                       height: MediaQuery.of(context).size.height * 0.055,
 
                       child: ListTile(
-                        title: const Text(
+                        title: Text(
                           "Attack",
-                          style: TextStyle(fontSize: 20),
+                          style: GoogleFonts.dotGothic16(
+                            fontSize: MediaQuery.of(context).size.width * 0.05,
+                            fontWeight: FontWeight.bold,
+                          ),
                           textAlign: TextAlign.center,
                         ),
                         leading: Radio(
@@ -125,9 +135,12 @@ void bottomModalSheet(BuildContext context, WidgetRef ref) {
                       height: MediaQuery.of(context).size.height * 0.055,
 
                       child: ListTile(
-                        title: const Text(
+                        title: Text(
                           "Defense",
-                          style: TextStyle(fontSize: 20),
+                          style: GoogleFonts.dotGothic16(
+                            fontSize: MediaQuery.of(context).size.width * 0.05,
+                            fontWeight: FontWeight.bold,
+                          ),
                           textAlign: TextAlign.center,
                         ),
                         leading: Radio(
@@ -156,9 +169,12 @@ void bottomModalSheet(BuildContext context, WidgetRef ref) {
                       height: MediaQuery.of(context).size.height * 0.055,
 
                       child: ListTile(
-                        title: const Text(
+                        title: Text(
                           "Speed",
-                          style: TextStyle(fontSize: 20),
+                          style: GoogleFonts.dotGothic16(
+                            fontSize: MediaQuery.of(context).size.width * 0.05,
+                            fontWeight: FontWeight.bold,
+                          ),
                           textAlign: TextAlign.center,
                         ),
                         leading: Radio(
@@ -185,9 +201,12 @@ void bottomModalSheet(BuildContext context, WidgetRef ref) {
                       height: MediaQuery.of(context).size.height * 0.055,
 
                       child: ListTile(
-                        title: const Text(
+                        title: Text(
                           "Special-Attack",
-                          style: TextStyle(fontSize: 20),
+                          style: GoogleFonts.dotGothic16(
+                            fontSize: MediaQuery.of(context).size.width * 0.05,
+                            fontWeight: FontWeight.bold,
+                          ),
                           textAlign: TextAlign.center,
                         ),
                         leading: Radio(
@@ -216,9 +235,12 @@ void bottomModalSheet(BuildContext context, WidgetRef ref) {
                       height: MediaQuery.of(context).size.height * 0.055,
 
                       child: ListTile(
-                        title: const Text(
+                        title: Text(
                           "Special-Defense",
-                          style: TextStyle(fontSize: 20),
+                          style: GoogleFonts.dotGothic16(
+                            fontSize: MediaQuery.of(context).size.width * 0.05,
+                            fontWeight: FontWeight.bold,
+                          ),
                           textAlign: TextAlign.center,
                         ),
                         leading: Radio(
@@ -245,9 +267,12 @@ void bottomModalSheet(BuildContext context, WidgetRef ref) {
                       height: MediaQuery.of(context).size.height * 0.055,
 
                       child: ListTile(
-                        title: const Text(
+                        title: Text(
                           "Default",
-                          style: TextStyle(fontSize: 20),
+                          style: GoogleFonts.dotGothic16(
+                            fontSize: MediaQuery.of(context).size.width * 0.05,
+                            fontWeight: FontWeight.bold,
+                          ),
                           textAlign: TextAlign.center,
                         ),
                         leading: Radio(
@@ -304,8 +329,10 @@ void bottomModalSheet(BuildContext context, WidgetRef ref) {
                             },
                             child: Text(
                               "Ascending",
-                              style: TextStyle(
-                                fontSize: 18,
+                              style: GoogleFonts.pressStart2p(
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.0285,
+                                fontWeight: FontWeight.bold,
                                 color: Colors.white,
                               ),
                             ),
@@ -341,8 +368,10 @@ void bottomModalSheet(BuildContext context, WidgetRef ref) {
                             },
                             child: Text(
                               "Descending",
-                              style: TextStyle(
-                                fontSize: 18,
+                              style: GoogleFonts.pressStart2p(
+                                fontSize:
+                                    MediaQuery.of(context).size.width * 0.0285,
+                                fontWeight: FontWeight.bold,
                                 color: Colors.white,
                               ),
                             ),

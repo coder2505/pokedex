@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pokedex_/pokemon.dart';
 import 'package:pokedex_/variables.dart';
 
-List<String> genList = [
+final List<String> genList = [
+  // DO NOT TOUCH THIS
   "All",
   "Indigo League",
   "Johto League",
@@ -24,7 +26,11 @@ Widget dropDownGen(WidgetRef ref) {
       return DropdownButton<String>(
         isExpanded: true,
         value: varGlobal.currentOptionGen,
-        style: TextStyle(color: Colors.white, fontSize: 18),
+        style: GoogleFonts.dotGothic16(
+          fontSize: MediaQuery.of(context).size.width * 0.05,
+          fontWeight: FontWeight.bold,
+          color: Colors.white,
+        ),
         underline: Container(color: Colors.transparent),
         items:
             genList.map<DropdownMenuItem<String>>((String value) {
@@ -75,7 +81,7 @@ Widget dropDownGen(WidgetRef ref) {
                     .setnewLimit(offset, limit);
                 break;
 
-              case "Unova League ":
+              case "Unova League":
                 int offset = varGlobal.startIndexOfLeagues[4];
                 int limit = varGlobal.endIndexOfLeagues[4];
                 ref
