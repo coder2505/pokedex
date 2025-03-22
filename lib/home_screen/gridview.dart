@@ -169,8 +169,8 @@ class _GridViewHomeScreenState extends ConsumerState<GridViewHomeScreen> {
 
             child: Row(
               children: [
-                // Left side: Name and Types (60% width)
                 Expanded(
+                  // Left side: Name and Types (60% width)
                   flex: 60,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -196,8 +196,8 @@ class _GridViewHomeScreenState extends ConsumerState<GridViewHomeScreen> {
                                     : Text(""),
                           ),
                         ),
-                        // Types section (40% height)
                         Expanded(
+                          // Types section (40% height)
                           flex: 40,
                           child: Container(
                             width: double.infinity,
@@ -229,8 +229,8 @@ class _GridViewHomeScreenState extends ConsumerState<GridViewHomeScreen> {
                     ),
                   ),
                 ),
-                // Right side: Image (40% width)
                 Expanded(
+                  // Right side: Image (40% width)
                   flex: 40,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),

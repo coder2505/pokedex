@@ -16,13 +16,12 @@ class PokemonInfo extends StatefulWidget {
   State<PokemonInfo> createState() => _PokemonInfoState();
 }
 
-Future<String> callLink(String name) async {
+Future<String> callLink(String link) async {
   // function used by callLinkLocal inside class, used to just call the link
-  String pokemonLink = "https://pokeapi.co/api/v2/pokemon/$name";
 
   http.Response response;
 
-  response = await http.get(Uri.parse(pokemonLink));
+  response = await http.get(Uri.parse(link));
 
   if (response.statusCode == 200) {
     return response.body;
@@ -34,15 +33,28 @@ Future<String> callLink(String name) async {
 class _PokemonInfoState extends State<PokemonInfo> {
   int? weight;
   int? height;
+  String? desc;
 
   void callLinkLocal(String name) async {
-    String response = await callLink(name);
+    String pokemonLink = "https://pokeapi.co/api/v2/pokemon/$name";
+    String response = await callLink(pokemonLink);
 
     if (response != "") {
       Map pokemonMap = jsonDecode(response);
+      String responseSpecies = await callLink(pokemonMap['species']['url']);
+
       setState(() {
         height = pokemonMap['height'];
         weight = pokemonMap['weight'];
+      });
+
+      if (responseSpecies != "") {
+        Map speciesResponse = jsonDecode(responseSpecies);
+        desc = speciesResponse['flavor_text_entries'][0]['flavor_text'];
+      }
+
+      setState(() {
+        desc = desc?.replaceAll("\n", " ");
       });
     }
   }
@@ -167,9 +179,25 @@ class _PokemonInfoState extends State<PokemonInfo> {
                   SizedBox(height: MediaQuery.of(context).size.height * 0.01),
 
                   SizedBox(height: MediaQuery.of(context).size.height * 0.01),
+
                   SizedBox(
                     width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.4,
+                    height: MediaQuery.of(context).size.height * 0.1,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          desc ?? "...",
+                          style: GoogleFonts.dotGothic16(fontSize: 15),
+                        ),
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * 0.3,
                     child: Row(
                       children: [
                         Expanded(
