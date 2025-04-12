@@ -18,7 +18,7 @@ class _GridViewHomeScreenState extends ConsumerState<GridViewHomeScreen> {
   Map mapresponse = {};
 
   String pokemonLink = "https://pokeapi.co/api/v2/pokemon/";
-  String startCallLink = "https://pokeapi.co/api/v2/pokemon?limit=&offset=0";
+  String startCallLink = "https://pokeapi.co/api/v2/pokemon?limit=300&offset=0";
 
   Future<String> callLink(String link) async {
     http.Response response;
@@ -36,9 +36,9 @@ class _GridViewHomeScreenState extends ConsumerState<GridViewHomeScreen> {
     String response = await callLink(startCallLink);
 
     if (response != "") {
-      setState(() {
-        mapresponse = jsonDecode(response);
-      });
+      // setState(() {
+      mapresponse = jsonDecode(response);
+      // });
 
       for (int i = 0; i < 1025; i++) {
         String pokemoninfo = await callLink(
@@ -73,24 +73,24 @@ class _GridViewHomeScreenState extends ConsumerState<GridViewHomeScreen> {
 
           colorForPokemon(imageUrl, i);
 
-          setState(() {
-            ref
-                .read(pokemonListProvider.notifier)
-                .add(
-                  Pokemon(
-                    name: name,
-                    types1: types1,
-                    types2: types2,
-                    imageUrl: imageUrl,
-                    hp: hp,
-                    attack: attack,
-                    defense: defense,
-                    spAttack: specialAttack,
-                    spDefense: specialDefense,
-                    speed: speed,
-                  ),
-                );
-          });
+          // setState(() {
+          ref
+              .read(pokemonListProvider.notifier)
+              .add(
+                Pokemon(
+                  name: name,
+                  types1: types1,
+                  types2: types2,
+                  imageUrl: imageUrl,
+                  hp: hp,
+                  attack: attack,
+                  defense: defense,
+                  spAttack: specialAttack,
+                  spDefense: specialDefense,
+                  speed: speed,
+                ),
+              );
+          // });
         }
       }
     }
@@ -102,7 +102,7 @@ class _GridViewHomeScreenState extends ConsumerState<GridViewHomeScreen> {
     final PaletteGenerator paletteGenerator =
         await PaletteGenerator.fromImageProvider(
           imageProvider,
-          size: Size(20, 20), // Resize image for faster processing
+          size: Size(20, 20),
         );
 
     try {
@@ -137,7 +137,6 @@ class _GridViewHomeScreenState extends ConsumerState<GridViewHomeScreen> {
       ),
       itemBuilder: (context, index) {
         int length = ref.read(pokemonListProvider.notifier).length();
-
         List<Pokemon> pokemonObj = ref.watch(pokemonListProvider);
 
         return GestureDetector(

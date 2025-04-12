@@ -370,7 +370,7 @@ void bottomModalSheet(BuildContext context, WidgetRef ref) {
                               "Descending",
                               style: GoogleFonts.pressStart2p(
                                 fontSize:
-                                    MediaQuery.of(context).size.width * 0.0285,
+                                    MediaQuery.of(context).size.width * 0.027,
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
                               ),

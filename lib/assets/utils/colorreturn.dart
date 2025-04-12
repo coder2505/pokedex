@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 String getPokemonTypeImageType1(String type) {
   switch (type) {
     case 'Fire':

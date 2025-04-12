@@ -81,6 +81,7 @@ class _PokemonInfoState extends State<PokemonInfo> {
       body: Column(
         children: [
           Container(
+            height: MediaQuery.of(context).size.height * 0.3,
             // the upper container containing image and heading, container used to add gradient color
             decoration: BoxDecoration(
               gradient: LinearGradient(
@@ -94,7 +95,7 @@ class _PokemonInfoState extends State<PokemonInfo> {
               children: [
                 Center(
                   child: SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.25,
+                    height: MediaQuery.of(context).size.height * 0.22,
                     width: MediaQuery.of(context).size.width * 0.6,
                     child: Image.network(
                       widget.obj.imageUrl,
@@ -110,7 +111,7 @@ class _PokemonInfoState extends State<PokemonInfo> {
                       widget.obj.name,
                       style: GoogleFonts.pressStart2p(
                         fontWeight: FontWeight.bold,
-                        fontSize: MediaQuery.of(context).size.width * 0.085,
+                        fontSize: MediaQuery.of(context).size.width * 0.08,
                         foreground:
                             Paint()
                               ..shader = LinearGradient(
@@ -125,8 +126,6 @@ class _PokemonInfoState extends State<PokemonInfo> {
               ],
             ),
           ),
-
-          SizedBox(height: 10),
 
           Expanded(
             child: Container(
@@ -176,15 +175,17 @@ class _PokemonInfoState extends State<PokemonInfo> {
                       ],
                     ),
                   ),
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
 
-                  SizedBox(height: MediaQuery.of(context).size.height * 0.01),
-
-                  SizedBox(
+                  Container(
                     width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.1,
+                    height: MediaQuery.of(context).size.height * 0.12,
                     child: Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: EdgeInsets.fromLTRB(
+                        MediaQuery.of(context).size.width * 0.03,
+                        0,
+                        MediaQuery.of(context).size.width * 0.03,
+                        0,
+                      ),
                       child: Align(
                         alignment: Alignment.center,
                         child: Text(
